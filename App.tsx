@@ -94,8 +94,8 @@ LogBox.ignoreAllLogs()
 
   
   useEffect(()=>{
-  //  createLanguages();
-  //  createQuestions();
+   createLanguages();
+   createQuestions();
   },[])
 
    
