@@ -14,7 +14,6 @@
    Text,
    View
  } from 'react-native';
- import { NativeBaseProvider } from 'native-base';
  import AntDesign from 'react-native-vector-icons/AntDesign';
  import Ionicons from 'react-native-vector-icons/Ionicons';
  import Feather from 'react-native-vector-icons/Feather';
@@ -102,9 +101,7 @@ LogBox.ignoreAllLogs()
    
    return (
     <SafeAreaProvider>
-    <NativeBaseProvider>
       <Navigation />
-    </NativeBaseProvider>
     <StatusBar  />
   </SafeAreaProvider>     
    );

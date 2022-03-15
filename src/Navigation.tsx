@@ -24,7 +24,7 @@ const Navigation: React.FC<NavigationProps> = () =>
           >
             
 
-            <RootStack.Screen  name="Auth" component={Quiz}  /> 
+            <RootStack.Screen  name="Quiz" component={Quiz}  /> 
        
 
           

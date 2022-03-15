@@ -1,20 +1,16 @@
 import React,{useEffect, useState} from 'react';
 import {Alert, Text,View} from 'react-native';
 import { colors } from '../../theme/colors';
-import DashedLine from 'react-native-dashed-line';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import OptionsButton from '../../components/OptionsButton';
 import SubmitButton from '../../components/SubmitButton';
 import styles from './styles';
-import { query,startAt,endAt, collection, db, orderBy, getDocs,limit } from '../../config/firebase';
-import { startAfter } from '@firebase/firestore';
+import { query,collection, db, orderBy, getDocs,limit, QuerySnapshot, startAfter} from '../../config/firebase';
+
 import { AddItemArray, ItemOptions } from '../../config/types';
 import TranslatedQuestion from './TranslatedQuestion';
 import Question from './Question';
 import Options from './Options';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
+import {DocumentData} from 'firebase/firestore';
 
 
 //#2596be
@@ -23,7 +19,7 @@ const Quiz:React.FC<{}> = () =>
 {
    
    
-    const [currentData,setCurrentData] = useState<any|AddItemArray>({});
+    const [currentData,setCurrentData] = useState<any|AddItemArray>(null);
     const [lastVisible,setLastVisible] = useState<any>(0);
     const [limitNumber,setLimit] = useState<number>(1); 
     const [hasSelected,setHasSelected] = useState<boolean>(false);
@@ -33,33 +29,57 @@ const Quiz:React.FC<{}> = () =>
     const [selectedButtonColor,setSelectedButtonColor] = useState<string>(colors.mainWhite);
     const [submitButtonToShow,setSubmitButtonToShow] = useState<string>('default');
     const [shouldDisableAllOptions,setShouldDisableAllOptions] = useState<boolean>(false);
+    const [correctAnswer,setCorrectAnswer] = useState<string>('');
     const dashSection:string = "___";
    
 
     const getFirstData = async():Promise<void> =>
     {
-    const docsQuery = await getDocs( query(collection(db,'questions'), orderBy('createdAt'), limit(limitNumber)) ); 
-    setCurrentData(docsQuery.docs[0].data());
-    const contentLastVisible = docsQuery.docs[docsQuery.docs.length-1];
-    setLastVisible(contentLastVisible);
-   
+    const docsQuery = await getDocs( query(collection(db,'questions'), orderBy('createdAt'),  limit(limitNumber)) ); 
+    setData(docsQuery); 
     };
+
+
+    const setData = (docsQuery:QuerySnapshot<DocumentData>):void =>
+    {
+      const contentLastVisible = docsQuery.docs[docsQuery.docs.length-1];
+    setLastVisible(contentLastVisible);
+      setCurrentData(docsQuery.docs[0].data());
+    setQuestionCorrectAnswer(docsQuery.docs[0].data());
+    }
 
     const getNextData = async():Promise<void> =>
     {
-     const docsQuery = await getDocs( query(collection(db,'questions'), orderBy('createdAt'), 
-     startAfter(lastVisible),limit(limitNumber) )); 
+   
+        console.log(collection(db,'questions'));
+        const docsQuery = await getDocs( query(collection(db,'questions'),
+         orderBy('createdAt'), startAfter(lastVisible),limit(limitNumber) ));
+         if(docsQuery.empty) 
+         {
+          return Alert.alert('Oops! Last Question', 'You have Successfully answered All Questions');
+         }
+         resetQuestionsSelected(); 
+        setData(docsQuery); 
+     
 
-     if(docsQuery?.docs[0] === void 0 )
-     {
-     return Alert.alert('Oops! Last Question', 'You have Successfully answered All Questions');
-     }
+    
+       
 
-     setCurrentData(docsQuery.docs[0].data());
-     const contentLastVisible = docsQuery.docs[docsQuery.docs.length-1];
-     setLastVisible(contentLastVisible);
-     resetQuestionsSelected();
+    
+
+    
+   
     }
+
+   
+    const setQuestionCorrectAnswer = (data:any|AddItemArray) =>
+    {
+      data.options.map((item:ItemOptions,index:number)=>{
+          if(item.isCorrect)  setCorrectAnswer(item.option);   
+      });
+
+    }
+
 
     const resetQuestionsSelected = ():void =>
     {
@@ -172,7 +192,8 @@ const Quiz:React.FC<{}> = () =>
        hasSelected={hasSelected} 
        selectedItemString={selectedItemString} 
        selectAnOption={selectAnOption}     
-       shouldDisableAllOptions={shouldDisableAllOptions}     
+       shouldDisableAllOptions={shouldDisableAllOptions} 
+        testID="options-parent"
        />
 
             </View>
@@ -199,6 +220,7 @@ const Quiz:React.FC<{}> = () =>
                    textColor='white'
                    onPress={onSubmitButton}
                    disabled={disableButton}
+                   testID='submit-content'
                  />
                 
                }
@@ -217,7 +239,7 @@ const Quiz:React.FC<{}> = () =>
          style={styles.submitButtonParentViewSuccess}>
             <View style={styles.seperateTextAndFlagView}>
                 <Text style={styles.answerText}>{`Answer `}
-                <Text style={styles.answerValue}>{':Hause'}</Text>
+                <Text style={styles.answerValue}>{`:${correctAnswer}`}</Text>
                 </Text>
                 
                 <Ionicons 
@@ -228,6 +250,7 @@ const Quiz:React.FC<{}> = () =>
             </View>
 
            <SubmitButton 
+           testID='continue-content-success'
          backgroundColor={colors.mainWhite}
           textString={'CONTINUE'}
          width='90%'
@@ -243,7 +266,7 @@ const Quiz:React.FC<{}> = () =>
          style={styles.submitButtonParentViewError}>
             <View style={styles.seperateTextAndFlagView}>
                 <Text style={styles.answerText}>{`Answer `}
-                <Text style={styles.answerValue}>{':Hause'}</Text>
+                <Text style={styles.answerValue}>{`:${correctAnswer}`}</Text>
                 </Text>
                 
                 <Ionicons 
@@ -254,6 +277,7 @@ const Quiz:React.FC<{}> = () =>
             </View>
 
            <SubmitButton 
+           testID='continue-content-error'
          backgroundColor={colors.mainWhite}
           textString={'CONTINUE'}
          width='90%'

@@ -12,7 +12,7 @@ import {AddItemArray} from './types';
         {option:"Berieden",isCorrect:false},
         {option:"Schaf",isCorrect:false}
       ],
-      Question:"Das ist ___  klien",
+      Question:"Das ist ___ klien",
       createdAt:serverTimestamp(),
       updatedAt:serverTimestamp()
     },
@@ -27,7 +27,7 @@ import {AddItemArray} from './types';
         {option:"Berieden",isCorrect:false},
         {option:"Schaf",isCorrect:false}
       ],
-      Question:"Das ist klien  ___",
+      Question:"Das ist klien ___",
       createdAt:serverTimestamp(),
       updatedAt:serverTimestamp()
     },
@@ -55,7 +55,7 @@ import {AddItemArray} from './types';
        {option:"Berieden",isCorrect:false},
        {option:"Schaf",isCorrect:false}
      ],
-     Question:"Das  ist___ klien",
+     Question:"Das ist ___ klien",
      createdAt:serverTimestamp(),
      updatedAt:serverTimestamp()
    }

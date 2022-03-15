@@ -13,7 +13,7 @@ const TranslatedQuestion:React.FC<TranslatedQuestionTypes> = ({
     <View style={styles.initTextParentView}>
     <Text style={styles.parentTextQuestionInit}>
     {
-       currentData?.header?.split(' ')?.map((item:any,index:number)=>(
+      currentData!=null && currentData.header.split(' ')?.map((item:any,index:number)=>(
          item == currentData?.headerSelectedString? <Text key={index} style={styles.highlightedTextStyle}>{item}</Text>
          : <Text key={index}> {item} </Text> 
        ))

@@ -5,7 +5,8 @@ import {
   FirebaseApp,
   FirebaseOptions
 } from "firebase/app";
-import {getFirestore,
+import {
+  getFirestore,
   Firestore,
   addDoc,
   collection,
@@ -17,6 +18,8 @@ import {getFirestore,
   FieldValue,
   getDoc,
   getDocs,
+  QuerySnapshot,
+   startAfter,
   limit } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,4 +49,4 @@ const db:Firestore = getFirestore();
 
  
  export  {db,addDoc,collection,fireBaseInit,query,orderBy,startAt,endAt,
-  serverTimestamp,FieldValue,getDoc,getDocs,limit};
+  serverTimestamp,FieldValue,getDoc,getDocs,limit,  QuerySnapshot, startAfter};

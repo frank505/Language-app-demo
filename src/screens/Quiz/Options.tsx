@@ -13,27 +13,30 @@ const Options:React.FC<OptionsTypes> = (
     hasSelected,
     selectedItemString,
     selectAnOption,
-    shouldDisableAllOptions
+    shouldDisableAllOptions,
+    testID
   }
-    ) =>
+    ) => 
 {
-    return (
-        <View style={styles.selectedButtonsParentView}>
+    return ( 
+        <View style={styles.selectedButtonsParentView} testID={testID}>
         {
-            currentData?.options?.map((item:ItemOptions,index:number)=>(
+          currentData!== null &&  currentData.options.map((item:ItemOptions,index:number)=>(
                 hasSelected==true && selectedItemString==item.option?
-                <View style={styles.blindSpaceSelected} key={index}></View>
+                <View 
+                testID={`question-missing-button-${index}`} 
+                style={styles.blindSpaceSelected} key={index}></View>
                 :
                 <OptionsButton
                 key={index}
-                testID='folgen-btn'
+                testID={`question-button-${index}`}
                 backgroundColor={shouldDisableAllOptions?'#ccc':colors.mainWhite}
                 textString={item.option}
                 isCorrect={item.isCorrect}
                 onPress={() => selectAnOption(item.isCorrect,item.option)}
                 disabled={shouldDisableAllOptions}
                 />
-               
+                
             ))
         }
          

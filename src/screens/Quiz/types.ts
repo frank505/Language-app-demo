@@ -19,5 +19,6 @@ export type OptionsTypes = {
     hasSelected:boolean,
     selectedItemString:string,
     selectAnOption:(isCorrect:Boolean,option:string) => void,
-    shouldDisableAllOptions:boolean
+    shouldDisableAllOptions:boolean,
+    testID:string
 }

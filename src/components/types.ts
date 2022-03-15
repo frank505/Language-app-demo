@@ -15,5 +15,6 @@ export type SubmitButtonType = {
     textColor?:string,
     onPress?:(optionalParams?:any) => void,
     disabled?:boolean,
-    textString:string
+    textString:string,
+    testID:string
 }

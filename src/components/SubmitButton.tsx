@@ -13,11 +13,13 @@ const SubmitButton:React.FC<SubmitButtonType> = (
         textColor,
         onPress,
         disabled,
-        textString
+        textString,
+        testID
        }) =>
 {
  return (
     <TouchableOpacity
+    testID={testID}
     onPress={onPress}
     disabled={disabled}
     style={[styles.button, {backgroundColor:backgroundColor,
