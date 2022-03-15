@@ -48,9 +48,9 @@ jest.mock("firebase/firestore", () =>
   {
     return render
     (   
-            // <NavigationContainer>
+          
               <Quiz/>
-            // </NavigationContainer>     
+             
     );
   
   }

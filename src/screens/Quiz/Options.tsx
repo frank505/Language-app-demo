@@ -5,6 +5,7 @@ import { ItemOptions } from '../../config/types';
 import { colors } from '../../theme/colors';
 import styles from './styles';
 import { OptionsTypes } from './types';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 
 const Options:React.FC<OptionsTypes> = (
@@ -18,10 +19,41 @@ const Options:React.FC<OptionsTypes> = (
   }
     ) => 
 {
+
     return ( 
-        <View style={styles.selectedButtonsParentView} testID={testID}>
-        {
-          currentData!== null &&  currentData.options.map((item:ItemOptions,index:number)=>(
+        <View>
+       {
+         currentData == 'loading' && currentData!=null?
+         <View style={{width:'100%',marginTop:30}}>
+        <SkeletonPlaceholder>
+          
+        <SkeletonPlaceholder.Item  flexDirection='row' width={150} height={80}>
+
+  
+<SkeletonPlaceholder.Item width={60} borderRadius={20} height={50} margin={10}/> 
+
+<SkeletonPlaceholder.Item  width={60}  borderRadius={20} height={50}  margin={10}/>    
+
+     </SkeletonPlaceholder.Item>
+
+
+        <SkeletonPlaceholder.Item  flexDirection='row' width={150} height={80}>
+
+  
+<SkeletonPlaceholder.Item width={60} borderRadius={20} height={50} margin={10}/> 
+
+<SkeletonPlaceholder.Item  width={60}  borderRadius={20} height={50}  margin={10}/>    
+
+</SkeletonPlaceholder.Item>
+
+      </SkeletonPlaceholder> 
+      </View>
+     :
+
+       <View style={styles.selectedButtonsParentView} testID={testID}>
+      
+          {
+              currentData?.options?.map((item:ItemOptions,index:number)=>(
                 hasSelected==true && selectedItemString==item.option?
                 <View 
                 testID={`question-missing-button-${index}`} 
@@ -38,11 +70,14 @@ const Options:React.FC<OptionsTypes> = (
                 />
                 
             ))
-        }
-         
+          }
 
           
        </View>
+         }
+
+        </View>
+       
     )
 }
 

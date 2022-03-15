@@ -4,6 +4,7 @@ import {View,Text,TouchableOpacity} from 'react-native';
 import styles from './styles';
 import OptionsButton from '../../components/OptionsButton';
 import DashedLine from 'react-native-dashed-line';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 
 
@@ -18,10 +19,24 @@ const Question:React.FC<QuestionTypes> = ({
     shouldDisableAllOptions
 }) =>
 {
+
   return (
     <View style={{marginTop:'20%',flexDirection:'row'}}>
     {
-      currentData?.Question?.split(' ').map((item:any,index:number)=>(
+   
+    currentData == 'loading' && currentData!=null?
+     
+     <View style={{width:'100%'}}>
+     <SkeletonPlaceholder>
+      
+       <SkeletonPlaceholder.Item  width={'100%'}   height={10}  /> 
+   
+    </SkeletonPlaceholder>    
+    </View>
+           
+      
+:
+     currentData?.Question?.split(' ').map((item:any,index:number)=>(
           item==dashSection?
           hasSelected==false ? 
           <View style={styles.blankSpaceLine} key={index}></View>
@@ -43,7 +58,9 @@ const Question:React.FC<QuestionTypes> = ({
           <Text style={styles.questionTextDefaultStyle}> {item} </Text>
           <DashedLine dashLength={1} dashThickness={1} dashColor="white" />
           </TouchableOpacity>
+          
       ))
+    
     }
  
 

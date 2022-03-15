@@ -35,6 +35,7 @@ const Quiz:React.FC<{}> = () =>
 
     const getFirstData = async():Promise<void> =>
     {
+      setCurrentData('loading'); 
     const docsQuery = await getDocs( query(collection(db,'questions'), orderBy('createdAt'),  limit(limitNumber)) ); 
     setData(docsQuery); 
     };
@@ -50,12 +51,14 @@ const Quiz:React.FC<{}> = () =>
 
     const getNextData = async():Promise<void> =>
     {
-   
+        let prevData = currentData;
+        setCurrentData('loading');
         console.log(collection(db,'questions'));
         const docsQuery = await getDocs( query(collection(db,'questions'),
          orderBy('createdAt'), startAfter(lastVisible),limit(limitNumber) ));
          if(docsQuery.empty) 
          {
+           setCurrentData(prevData);
           return Alert.alert('Oops! Last Question', 'You have Successfully answered All Questions');
          }
          resetQuestionsSelected(); 
@@ -105,10 +108,7 @@ const Quiz:React.FC<{}> = () =>
 
 
 
-   useEffect(()=>{
-   console.log(currentData);
-   },
-   [currentData]);
+ 
 
 
  const selectAnOption = (isCorrect:Boolean,option:string):void =>
@@ -152,7 +152,7 @@ const Quiz:React.FC<{}> = () =>
     await getNextData();
  }
 
-
+ 
    
     
    return (
