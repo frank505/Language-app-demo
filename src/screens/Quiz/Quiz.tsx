@@ -170,7 +170,8 @@ const Quiz:React.FC<{}> = () =>
        </View>
      {/**question section */}
 
-      <TranslatedQuestion currentData={currentData} />
+      <TranslatedQuestion 
+      currentData={currentData} />
       
       {/**enter you answer here */}
 

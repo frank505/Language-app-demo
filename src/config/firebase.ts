@@ -29,13 +29,13 @@ import {
 
 
 const firebaseConfig:FirebaseOptions = {
-  apiKey: "AIzaSyDeIxHJKK6vmSQLUksSKJTcIsJFlJnV4Ys",
-  authDomain: "languageapp-346ff.firebaseapp.com",
-  projectId: "languageapp-346ff",
-  storageBucket: "languageapp-346ff.appspot.com",
-  messagingSenderId: "420579061564",
-  appId: "1:420579061564:web:84989ea8fa00e40d957839",
-  measurementId: "G-Q8TZ98501P"
+  apiKey: "xxxx",
+  authDomain: "xxx",
+  projectId: "xxxxx",
+  storageBucket: "xxx",
+  messagingSenderId: "xxx",
+  appId: "xxx",
+  measurementId: "xxx"
 };
 
 
